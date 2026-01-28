@@ -64,7 +64,7 @@ async def create_task(request: TaskRequest, background_tasks: BackgroundTasks):
     use_web_search = getattr(request, 'use_web_search', True)
     
     print(f"\n{'='*60}")
-    print(f"📝 New task created: {task_id}")
+    print(f"New task created: {task_id}")
     print(f"Task: {request.task}")
     print(f"Web search enabled: {use_web_search}")
     print(f"{'='*60}\n")

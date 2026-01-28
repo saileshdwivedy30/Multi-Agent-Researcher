@@ -233,13 +233,13 @@ def run_workflow(task_id: str, task: str, use_web_search: bool = True):
                     "conversation_history": result.conversation_history,
                 }, f, indent=2, ensure_ascii=False)
             
-            print(f"📄 Report saved:")
+            print(f"Report saved:")
             print(f"   Text: {text_file}")
             print(f"   JSON: {json_file}")
             sys.stdout.flush()
             
         except Exception as e:
-            print(f"⚠️  Warning: Could not save report to file: {e}")
+            print(f"Warning: Could not save report to file: {e}")
             sys.stdout.flush()
         
         print(f"Task {task_id} marked as completed.\n")

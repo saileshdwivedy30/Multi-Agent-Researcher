@@ -155,7 +155,7 @@ Be concise but thorough."""
                     
                     # Step 3: Framework executes tools
                     if tool_calls_to_execute:
-                        print(f"🔍 LLM generated {len(tool_calls_to_execute)} tool call(s)")
+                        print(f"LLM generated {len(tool_calls_to_execute)} tool call(s)")
                         for tool_call in tool_calls_to_execute:
                             # Extract tool call info
                             if isinstance(tool_call, dict):

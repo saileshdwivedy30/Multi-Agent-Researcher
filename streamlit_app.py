@@ -11,7 +11,7 @@ API_TASKS_URL = f"{API_BASE_URL}/api/v1/tasks"
 
 st.set_page_config(
     page_title="Multi-Agent Research System",
-    page_icon="🤖",
+    page_icon=None,
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -80,8 +80,8 @@ def create_task(task: str) -> Optional[str]:
             st.error(f"Failed to create task: {response.text}")
             return None
     except requests.exceptions.ConnectionError:
-        st.error("❌ Cannot connect to API. Please make sure the FastAPI server is running on http://localhost:8000")
-        st.info("💡 Start the API server with: `python api.py`")
+        st.error("Cannot connect to API. Please make sure the FastAPI server is running on http://localhost:8000")
+        st.info("Start the API server with: `python api.py`")
         return None
     except Exception as e:
         st.error(f"Error creating task: {str(e)}")
@@ -107,14 +107,7 @@ def get_task_status(task_id: str) -> Optional[Dict[str, Any]]:
 
 def get_agent_icon(agent_name: str) -> str:
     """Get icon for agent."""
-    icons = {
-        "supervisor": "👔",
-        "researcher": "🔍",
-        "analyst": "📊",
-        "writer": "✍️",
-        "evaluator": "✅"
-    }
-    return icons.get(agent_name, "🤖")
+    return ""
 
 
 def get_agent_display_name(agent_name: str) -> str:
@@ -153,17 +146,17 @@ def display_progress(progress: Dict[str, Any], current_agent: Optional[str]):
         
         if agent in completed_agents:
             status_class = "agent-completed"
-            status_text = "✅ Completed"
+            status_text = "Completed"
         elif agent == current_agent:
             status_class = "agent-running"
-            status_text = "🔄 Running..."
+            status_text = "Running..."
         else:
             status_class = "agent-pending"
-            status_text = "⏸️ Pending"
+            status_text = "Pending"
         
         st.markdown(f"""
             <div class="agent-status {status_class}">
-                {icon} <strong>{name}</strong>: {status_text}
+                <strong>{name}</strong>: {status_text}
             </div>
         """, unsafe_allow_html=True)
 
@@ -176,7 +169,7 @@ def display_routing_updates(progress: Dict[str, Any]):
     events = [e for e in events if isinstance(e, str) and e.startswith("Supervisor →")]
     if not events:
         return
-    st.subheader("🧭 Workflow Updates")
+    st.subheader("Workflow Updates")
     for evt in events[-20:]:
         st.markdown(f"- {evt}")
 
@@ -186,7 +179,7 @@ def display_evaluation_scores(scores: Dict[str, float], passed: bool, feedback: 
     if not scores:
         return
     
-    st.subheader("📊 Evaluation Results")
+    st.subheader("Evaluation Results")
     
     # Calculate average
     avg_score = sum(scores.values()) / len(scores) if scores else 0
@@ -207,13 +200,13 @@ def display_evaluation_scores(scores: Dict[str, float], passed: bool, feedback: 
     
     # Status badge
     if passed:
-        st.success(f"✅ Evaluation PASSED (Average: {avg_score:.1f}/10)")
+        st.success(f"Evaluation PASSED (Average: {avg_score:.1f}/10)")
     else:
-        st.warning(f"⚠️ Evaluation FAILED (Average: {avg_score:.1f}/10)")
+        st.warning(f"Evaluation FAILED (Average: {avg_score:.1f}/10)")
     
     # Feedback
     if feedback:
-        with st.expander("📝 Evaluation Feedback"):
+        with st.expander("Evaluation Feedback"):
             st.write(feedback)
 
 
@@ -222,7 +215,7 @@ def display_sources(sources: list):
     if not sources:
         return
     
-    st.subheader(f"🔗 Sources ({len(sources)})")
+    st.subheader(f"Sources ({len(sources)})")
     
     with st.expander("View all sources"):
         for i, source in enumerate(sources, 1):
@@ -231,7 +224,7 @@ def display_sources(sources: list):
 
 def display_report(report: str):
     """Display final report."""
-    st.subheader("📄 Final Report")
+    st.subheader("Final Report")
     
     # Render markdown
     st.markdown(report)
@@ -240,7 +233,7 @@ def display_report(report: str):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"report_{timestamp}.txt"
     st.download_button(
-        label="📥 Download Report",
+        label="Download Report",
         data=report,
         file_name=filename,
         mime="text/plain"
@@ -251,11 +244,11 @@ def main():
     """Main Streamlit application."""
     
     # Header
-    st.markdown('<div class="main-header">🤖 Multi-Agent Research System</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">Multi-Agent Research System</div>', unsafe_allow_html=True)
     
     # Check API health
     if not check_api_health():
-        st.error("❌ API server is not running. Please start it with: `python api.py`")
+        st.error("API server is not running. Please start it with: `python api.py`")
         st.stop()
     
     # Initialize session state
@@ -266,7 +259,7 @@ def main():
     
     # Sidebar
     with st.sidebar:
-        st.header("ℹ️ About")
+        st.header("About")
         st.info("""
         This system uses multiple AI agents to:
         1. Research your question
@@ -276,7 +269,7 @@ def main():
         """)
     
     # Main input section
-    st.header("📝 Ask a Question")
+    st.header("Ask a Question")
     
     # Text input
     question = st.text_input(
@@ -288,7 +281,7 @@ def main():
     # Submit button
     col1, col2 = st.columns([1, 5])
     with col1:
-        submit_button = st.button("🚀 Submit", type="primary", use_container_width=True)
+        submit_button = st.button("Submit", type="primary", use_container_width=True)
     
     # Handle submission
     if submit_button and question:
@@ -314,7 +307,7 @@ def main():
             error = task_data.get("error")
             
             # Show progress section
-            st.header("⏳ Workflow Progress")
+            st.header("Workflow Progress")
             
             if status == "processing":
                 display_routing_updates(progress)
@@ -327,7 +320,7 @@ def main():
                 st.session_state.polling = False
                 
                 # Show completion message
-                st.success("✅ Workflow completed successfully!")
+                st.success("Workflow completed successfully!")
                 
                 # Display results
                 if result:
@@ -352,18 +345,18 @@ def main():
                         display_sources(result["sources"])
                 
                 # Reset button
-                if st.button("🔄 Ask Another Question"):
+                if st.button("Ask Another Question"):
                     st.session_state.task_id = None
                     st.session_state.polling = False
                     st.rerun()
             
             elif status == "failed":
                 st.session_state.polling = False
-                st.error("❌ Workflow failed")
+                st.error("Workflow failed")
                 if error:
                     st.error(f"Error: {error}")
                 
-                if st.button("🔄 Try Again"):
+                if st.button("Try Again"):
                     st.session_state.task_id = None
                     st.session_state.polling = False
                     st.rerun()

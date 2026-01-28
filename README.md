@@ -66,4 +66,14 @@ streamlit run streamlit_app.py
 python main.py "Your question here"
 ```
 
+## UI Screenshots
+
+The Streamlit UI provides a clean interface for interacting with the multi-agent system. See example outputs in the `UI Result Snapshot/` folder:
+
+- `result1.png` - Workflow progress and routing updates
+- `result2.png` - Evaluation results and scores
+- `result3.png` - Final report display
+
+These snapshots demonstrate the real-time workflow updates, evaluation metrics, and formatted report output.
+
 
