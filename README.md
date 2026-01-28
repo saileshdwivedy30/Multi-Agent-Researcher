@@ -70,13 +70,16 @@ python main.py "Your question here"
 
 The Streamlit UI provides a clean interface for interacting with the multi-agent system:
 
+### Input and Task Submission
+![Input and Task Submission](UI%20Result%20Snapshot/result1.png)
+
 ### Workflow Progress and Routing Updates
-![Workflow Progress](UI%20Result%20Snapshot/result1.png)
+![Workflow Progress](UI%20Result%20Snapshot/result2.png)
 
 ### Evaluation Results and Scores
-![Evaluation Results](UI%20Result%20Snapshot/result2.png)
+![Evaluation Results](UI%20Result%20Snapshot/result3.png)
 
 ### Final Report Display
-![Final Report](UI%20Result%20Snapshot/result3.png)
+![Final Report](UI%20Result%20Snapshot/result4.png)
 
 
