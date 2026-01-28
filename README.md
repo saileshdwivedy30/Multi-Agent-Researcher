@@ -9,7 +9,7 @@ Agents:
 - Researcher: gathers web research and sources
 - Analyst: synthesizes findings
 - Writer: generates the final report
-- Evaluator: scores the report (structured output) and stores feedback
+- Evaluator (LLM-as-judge): scores the report (structured output) and stores feedback
 
 Outputs:
 - Task status and results are available via the API.
